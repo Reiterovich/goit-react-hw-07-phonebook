@@ -1,6 +1,6 @@
-import { nanoid } from 'nanoid';
+import Notiflix from 'notiflix';
 import { useState } from 'react';
-import { addContacts } from '../../redux/contact/contact.reducer';
+import { addContact } from '../../redux/contact/contact.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from '../../redux/contact/selector';
 
@@ -15,24 +15,24 @@ export const Form = () => {
 
     const contactData = {
       name: name,
-      number: number,
-      id: nanoid(),
+      phone: number,
     };
 
     if (
       contacts.some(
         elm =>
           elm.name.toLowerCase() === contactData.name.toLowerCase() ||
-          elm.number === contactData.number
+          elm.phone === contactData.phone
       )
     ) {
-      window.alert(
-        `${contactData.name} or ${contactData.number} is already in contacts!`
+      Notiflix.Notify.failure(
+        `${contactData.name} or ${contactData.phone} is already in contacts!`
       );
+
       return;
     }
 
-    dispatch(addContacts(contactData));
+    dispatch(addContact(contactData));
 
     setName('');
     setNumber('');
